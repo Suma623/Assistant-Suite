@@ -13,8 +13,18 @@ api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend', static_url_path='')
 CORS(app)
+
+@app.route('/frontend/<filename>')
+def serve_frontend_file(filename):
+    frontend_path = os.path.join(app.root_path, 'frontend')
+    file_path = os.path.join(frontend_path, filename)
+
+    if os.path.exists(file_path):
+        return send_from_directory(frontend_path, filename)
+    else:
+        abort(404)
 
 
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
