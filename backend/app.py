@@ -28,7 +28,7 @@ def serve_frontend_file(filename):
         abort(404)
 
 
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
 
 def load_users():
     if os.path.exists("users.json"):
